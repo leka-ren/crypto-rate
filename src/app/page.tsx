@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect } from "react";
 import { styled } from "styled-components";
-import CurrencyExchageForm from "./components/exchageForm/exchageForm";
+import ExchageForm from "./components/exchageForm/exchageForm";
 import CurrencyInformTable from "./components/currencyInformTable/currencyInformTable";
+import { getCurrencyData } from "@/states/getCurrencyData";
 
 const MainPage = styled.main`
   background-color: #222;
@@ -12,9 +14,13 @@ const MainPage = styled.main`
   font-family: "Courier New", Courier, monospace;
 `;
 export default function Page(): React.ReactNode {
+  useEffect(() => {
+    getCurrencyData();
+  }, []);
+
   return (
     <MainPage>
-      <CurrencyExchageForm />
+      <ExchageForm />
       <CurrencyInformTable />
     </MainPage>
   );
