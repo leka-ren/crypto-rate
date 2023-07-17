@@ -1,6 +1,6 @@
 {
-  "homepage": "http://leka-ren.github.io/crypto-detect",
-  "name": "crypto-detect",
+  "homepage": "http://leka-ren.github.io/crypto-rate",
+  "name": "crypto-rate",
   "version": "0.1.0",
   "private": true,
   "scripts": {
