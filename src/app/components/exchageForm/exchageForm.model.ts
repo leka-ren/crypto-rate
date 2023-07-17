@@ -1,5 +1,5 @@
 import { $currencyDataPriceValue } from "@/states/getCurrencyData";
-import { createStore, sample } from "effector";
+import { combine, createStore, sample } from "effector";
 import {
   $currencyFrom,
   $currencyTo,
@@ -7,25 +7,18 @@ import {
 import { $currencyInput } from "../exchageValueInput/exchangeInput.model";
 
 // Store
-export const $exchangeResult = createStore<any>(null);
-
-sample({
-  clock: $currencyInput,
-  source: {
-    $currencyDataPriceValue,
-    $currencyFrom,
-    $currencyTo,
-  },
-  fn: (...data) => {
-    console.log(data);
+export const $exchangeResult = combine(
+  $currencyDataPriceValue,
+  $currencyFrom,
+  $currencyTo,
+  $currencyInput,
+  (currencyDataPriceValue, currencyFrom, currencyTo, currencyInput) => {
     const currencyFromUSD =
-      Number(data[1]) *
-      Number(data[0].$currencyDataPriceValue[data[0].$currencyFrom]);
+      Number(currencyInput) * Number(currencyDataPriceValue[currencyFrom]);
     const currencyToUSD =
       Number(currencyFromUSD) /
-      Number(Number(data[0].$currencyDataPriceValue[data[0].$currencyTo]));
+      Number(Number(currencyDataPriceValue[currencyTo]));
 
     return currencyToUSD;
-  },
-  target: $exchangeResult,
-});
+  }
+);
